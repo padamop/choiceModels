@@ -1,0 +1,6 @@
+library("mlogit")
+d = read.table('data_frame.txt')
+colnames(d) <- c("id", "choice", "price1", "price2")
+d <- mlogit.data(d, choice="choice", shape="wide", varying=3:4, sep="", alt.levels=c(1,2))
+d.ml <- mlogit(choice~price, d)
+summary(d.ml)
