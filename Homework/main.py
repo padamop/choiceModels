@@ -1,9 +1,9 @@
 import math
 import numpy as np
 import random
-#import rpy2
-#import rpy2.robjects as robjects
-#from rpy2.robjects.packages import importr
+import rpy2
+import rpy2.robjects as robjects
+from rpy2.robjects.packages import importr
 
 from models import model1, model2
 from plots import plotHistogram
@@ -28,6 +28,7 @@ d = np.random.rand(n,m2) # alternative specific coefficients
 
 results, prob, utilities = simulate(n, z, w, b, d, a, sample)
 
+r = robjects.r
 #mlogit = importr('mlogit')
 
 '''
@@ -69,6 +70,10 @@ results, prob, utilities = simulate(n, z, w, b, d, a, sample)
 np.savetxt('data_frame3.txt', results, delimiter='\t', fmt=['%i', '%i']+['%.8f']*(n*(m1+m2)))
 
 
+# Run r script to fit models
+rscript = "F:\\Dropbox\\NYU\\2012 Fall\\Choice Models in Operations\\Homework\\Homework2\\problem2_3_b.R"
+#results = r.source(rscript, **{'echo': True})
+
 '''
 Run Homework 3 Problem 3 part (c)
 '''
@@ -88,6 +93,7 @@ d = np.array(([0], [6], [5]))
 
 results, prob, utilities = simulate(n, z, w, b, d, a, sample)
 np.savetxt('data_frame4.txt', results, delimiter='\t', fmt=['%i', '%i']+['%.8f']*(n*(m1+m2)))
+
 
 '''
 Run Homework 3 Problem 3 part (d)

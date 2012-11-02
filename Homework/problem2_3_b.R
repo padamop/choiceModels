@@ -17,17 +17,17 @@ ml.data <- mlogit.data(mydata, shape="wide", choice="choiceid",
 
 # V_j = b * p_j
 # Estimation by maximum likelihood of the multinomial logit model, with alternative-specific and/or individual specific variables.
-ml.results1 <- mlogit(choiceid~p | +0, data = ml.data)
+ml.results1i <- mlogit(choiceid~p | +0, data = ml.data)
 # Result summaries
-summary(ml.results1)
+summary(ml.results1i)
 
 # V_j = a_j + b * p_j with one of the a_j set to zero
-ml.results2 <- mlogit(choiceid~p, data = ml.data, reflevel="1")
-summary(ml.results2)
+ml.results1ii <- mlogit(choiceid~p, data = ml.data, reflevel="1")
+summary(ml.results1ii)
 
 # V_j = d_j * p_j
-ml.results3 <- mlogit(choiceid~+0 | +0 | p , data = ml.data)
-summary(ml.results3)
+ml.results1iii <- mlogit(choiceid~+0 | +0 | p, data = ml.data)
+summary(ml.results1iii)
 
 
 # Repeat with b = -0.2
@@ -37,16 +37,16 @@ ml.data <- mlogit.data(mydata, shape="wide", choice="choiceid",
                        varying=3:4, sep="", alt.levels=c(1,2), id="id")
 
 # V_j = b * p_j
-ml.results1 <- mlogit(choiceid~p | +0, data = ml.data)
-summary(ml.results1)
+ml.results2i <- mlogit(choiceid~p | +0, data = ml.data)
+summary(ml.results2i)
 
 # V_j = a_j + b * p_j with one of the a_j set to zero
-ml.results2 <- mlogit(choiceid~p, data = ml.data, reflevel="1")
-summary(ml.results2)
+ml.results2ii <- mlogit(choiceid~p, data = ml.data, reflevel="1")
+summary(ml.results2ii)
 
 # V_j = d_j * p_j
-ml.results3 <- mlogit(choiceid~+0 | +0 | p , data = ml.data)
-summary(ml.results3)
+ml.results2iii <- mlogit(choiceid~+0 | +0 | p , data = ml.data)
+summary(ml.results2iii)
 
 
 # Repeat with b = -0.2 and no-purchase option
@@ -56,16 +56,16 @@ ml.data <- mlogit.data(mydata, shape="wide", choice="choiceid",
                        varying=3:5, sep="", alt.levels=c(1,2,3), id="id")
 
 # V_j = b * p_j
-ml.results1 <- mlogit(choiceid~p | +0, data = ml.data)
-summary(ml.results1)
+ml.results3i <- mlogit(choiceid~p | +0, data = ml.data)
+summary(ml.results3i)
 
 # V_j = a_j + b * p_j with one of the a_j set to zero
-ml.results2 <- mlogit(choiceid~p, data = ml.data, reflevel="1")
-summary(ml.results2)
+ml.results3ii <- mlogit(choiceid~p, data = ml.data, reflevel="1")
+summary(ml.results3ii)
 
 # V_j = d_j * p_j
-ml.results3 <- mlogit(choiceid~+0 | +0 | p , data = ml.data)
-summary(ml.results3)
+ml.results3iii <- mlogit(choiceid~+0 | +0 | p , data = ml.data)
+summary(ml.results3iii)
 
 
 
@@ -77,9 +77,9 @@ ml.data <- mlogit.data(mydata, shape="wide", choice="choiceid",
                        varying=3:5, sep="", alt.levels=c(1,2,3), id="id")
 
 # V_j = b * p_j
-ml.results1 <- mlogit(choiceid~p | +0, data = ml.data)
-summary(ml.results1)
+ml.resultsCi <- mlogit(choiceid~p | +0, data = ml.data)
+summary(ml.resultsCi)
 
 # V_j = d_j * p_j
-ml.results3 <- mlogit(choiceid~+0 | +0 | p , data = ml.data)
-summary(ml.results3)
+ml.resultsCiii <- mlogit(choiceid~+0 | +0 | p , data = ml.data)
+summary(ml.resultsCiii)
