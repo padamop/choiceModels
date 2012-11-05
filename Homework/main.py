@@ -6,7 +6,7 @@ import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 
 from models import model1, model2
-from plots import plotHistogram
+from plots import plotHistogram, plotHistogramII
 from simulator import simulate
 
 
@@ -120,6 +120,8 @@ for i in range(trainingSets):
     model1Estimate = model1(results, n, pblue, pred) #xxx
     # fit model 2
     model2Estimate = model2(results, n, pblue, pred) #xxx
+    #print(model1Estimate)
+    #print(model2Estimate)
     # compute sales
     trueShare = math.exp(utilities[0,1])/(1 + math.exp(utilities[0,1]))
     model1Share = math.exp(float(model1Estimate[1]))/(1 + math.exp(float(model1Estimate[1])))
@@ -130,6 +132,7 @@ for i in range(trainingSets):
 
 # plot histogram
 plotHistogram(errors[:,0], errors[:,1], label1=r'Model 1: $V_j = \beta p_j$', label2=r'Model 2: $V_j = \delta_j p_j$', title='Histogram of relative errors', xlabel='Value', ylabel='Frequency')
+plotHistogramII([errors[:,0], errors[:,1]], label=[r'Model 1: $V_j = \beta p_j$', r'Model 2: $V_j = \delta_j p_j$'], title='Histogram of relative errors', xlabel='Value', ylabel='Frequency', bins=20)
 
 
 print('Finished!')

@@ -64,7 +64,7 @@ ml.results3ii <- mlogit(choiceid~p, data = ml.data, reflevel="1")
 summary(ml.results3ii)
 
 # V_j = d_j * p_j
-ml.results3iii <- mlogit(choiceid~+0 | +0 | p , data = ml.data)
+ml.results3iii <- mlogit(choiceid~+0 | +0 | p , data = ml.data, reflevel="1")
 summary(ml.results3iii)
 
 
@@ -81,5 +81,5 @@ ml.resultsCi <- mlogit(choiceid~p | +0, data = ml.data)
 summary(ml.resultsCi)
 
 # V_j = d_j * p_j
-ml.resultsCiii <- mlogit(choiceid~+0 | +0 | p , data = ml.data)
+ml.resultsCiii <- mlogit(choiceid~+0 | +0 | p , data = ml.data, reflevel="1")
 summary(ml.resultsCiii)
