@@ -87,8 +87,8 @@ m2 = 1
 a = np.reshape(np.array(([0, 3.584, 1.99])), (1, n))
 b = np.zeros((1,m1))
 z = np.zeros((n,m1))
-w = np.array(([0], [-0.75], [-0.5]))
-d = np.array(([0], [6], [5]))
+d = np.array(([0], [-0.75], [-0.5]))
+w = np.array(([0], [6], [5]))
 
 
 results, prob, utilities = simulate(n, z, w, b, d, a, sample)
@@ -105,7 +105,7 @@ m1 = 0  # no variables with generic coefficients
 a = np.reshape(np.array(([0, 3.584, 1.99])), (1, n)) # intercepts
 b = np.zeros((1,m1))
 z = np.zeros((n,m1))
-w = np.array(([0], [-0.75], [-0.5])) # alternative specific variable coefficients
+d = np.array(([0], [-0.75], [-0.5])) # alternative specific variable coefficients
 
 trainingSets = 100
 errors = np.empty([trainingSets, 2]) 
@@ -113,7 +113,7 @@ for i in range(trainingSets):
     # sample each price independently and uniformly at random from the interval [0, 10]
     pblue = random.uniform(1, 10)
     pred = random.uniform(1, 10)
-    d = np.array(([0], [pblue], [pred]))
+    w = np.array(([0], [pblue], [pred]))
     # ground truth model
     results, prob, utilities = simulate(n, z, w, b, d, a, sample)
     # fit model 1

@@ -31,55 +31,55 @@ summary(ml.results1iii)
 
 
 # Repeat with b = -0.2
-mydata <- read.table("data_frame2.txt", sep = "\t", col.names=c( 'id', 'choiceid', 'p1', 'p2'))
+mydata2 <- read.table("data_frame2.txt", sep = "\t", col.names=c( 'id', 'choiceid', 'p1', 'p2'))
 
-ml.data <- mlogit.data(mydata, shape="wide", choice="choiceid",
+ml.data2 <- mlogit.data(mydata2, shape="wide", choice="choiceid",
                        varying=3:4, sep="", alt.levels=c(1,2), id="id")
 
 # V_j = b * p_j
-ml.results2i <- mlogit(choiceid~p | +0, data = ml.data)
+ml.results2i <- mlogit(choiceid~p | +0, data = ml.data2)
 summary(ml.results2i)
 
 # V_j = a_j + b * p_j with one of the a_j set to zero
-ml.results2ii <- mlogit(choiceid~p, data = ml.data, reflevel="1")
+ml.results2ii <- mlogit(choiceid~p, data = ml.data2, reflevel="1")
 summary(ml.results2ii)
 
 # V_j = d_j * p_j
-ml.results2iii <- mlogit(choiceid~+0 | +0 | p , data = ml.data)
+ml.results2iii <- mlogit(choiceid~+0 | +0 | p , data = ml.data2)
 summary(ml.results2iii)
 
 
 # Repeat with b = -0.2 and no-purchase option
-mydata <- read.table("data_frame3.txt", sep = "\t", col.names=c( 'id', 'choiceid', 'p0', 'p1', 'p2'))
+mydata3 <- read.table("data_frame3.txt", sep = "\t", col.names=c( 'id', 'choiceid', 'p0', 'p1', 'p2'))
 
-ml.data <- mlogit.data(mydata, shape="wide", choice="choiceid",
+ml.data3 <- mlogit.data(mydata3, shape="wide", choice="choiceid",
                        varying=3:5, sep="", alt.levels=c(1,2,3), id="id")
 
 # V_j = b * p_j
-ml.results3i <- mlogit(choiceid~p | +0, data = ml.data)
+ml.results3i <- mlogit(choiceid~p | +0, data = ml.data3)
 summary(ml.results3i)
 
 # V_j = a_j + b * p_j with one of the a_j set to zero
-ml.results3ii <- mlogit(choiceid~p, data = ml.data, reflevel="1")
+ml.results3ii <- mlogit(choiceid~p, data = ml.data3, reflevel="1")
 summary(ml.results3ii)
 
 # V_j = d_j * p_j
-ml.results3iii <- mlogit(choiceid~+0 | +0 | p , data = ml.data, reflevel="1")
+ml.results3iii <- mlogit(choiceid~+0 | +0 + p , data = ml.data3, reflevel="1")
 summary(ml.results3iii)
 
 
 
 
 # part (c)
-mydata <- read.table("data_frame4.txt", sep = "\t", col.names=c( 'id', 'choiceid', 'p0', 'p1', 'p2'))
+mydata4 <- read.table("data_frame4.txt", sep = "\t", col.names=c( 'id', 'choiceid', 'p0', 'p1', 'p2'))
 
-ml.data <- mlogit.data(mydata, shape="wide", choice="choiceid",
+ml.data4 <- mlogit.data(mydata4, shape="wide", choice="choiceid",
                        varying=3:5, sep="", alt.levels=c(1,2,3), id="id")
 
 # V_j = b * p_j
-ml.resultsCi <- mlogit(choiceid~p | +0, data = ml.data)
+ml.resultsCi <- mlogit(choiceid~p | +0, data = ml.data4)
 summary(ml.resultsCi)
 
 # V_j = d_j * p_j
-ml.resultsCiii <- mlogit(choiceid~+0 | +0 | p , data = ml.data, reflevel="1")
+ml.resultsCiii <- mlogit(choiceid~+0 | +0 + p , data = ml.data4, reflevel="1")
 summary(ml.resultsCiii)

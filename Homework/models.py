@@ -18,16 +18,6 @@ def model1_v1(data, n, price1, price2):
     V = np.array([0, sl*price1, sl*price2])
     return V 
 '''
-'''
-def fModel2(b, p):
-    y = b*p
-    return y
-
-def l(shareBlue, fblue, shareRed, fred):
-    y = shareRed*fred + shareBlue*fblue - np.log(1 + np.exp(fred) + np.exp(fblue))
-    return y
-'''
-
 
 
 #xxx update for arbitrary dimensions
@@ -37,29 +27,21 @@ def model1(data, n, price1, price2):
     def f(b):
         y = shares[1]*b*price1 + shares[2]*b*price2 - np.log(1 + np.exp(b*price1) + np.exp(b*price2))
         return y
-    sl = scipy.optimize.fsolve(f, 0.0)
+    sl = scipy.optimize.fsolve(f, 0.0) # xxx 
     #print('prices: 0\t' + str(price1) + '\t' + str(price2))
     #print('shares: ' + str(shares[0]) + '\t' + str(shares[1])  + '\t' + str(shares[2]))
     #print('b = ' + str(sl[0]))
     V = np.array([0, sl*price1, sl*price2])
     return V 
 
-'''
-#xxx update for arbitrary dimensions
-def model2_v1(data, n, price1, price2):
+
+# Same results with model2() but simpler implementation
+def model2Simple(data, n, price1, price2):
     sample = float(data.shape[0])
-    shares = np.histogram(data[:,1].astype('float32').view('int32'), bins=n)[0]/sample
-    d1 = Symbol('d1')
-    d2 = Symbol('d2')
-    eq1 = (shares[1]*price1 - (price1*exp(d1*price1))/(1+exp(d1*price1)+exp(d2*price2)))
-    eq2 = (shares[2]*price2 - (price2*exp(d2*price2))/(1+exp(d1*price1)+exp(d2*price2)))
-    #simpleEq1 = simplify(eq1)
-    #simpleEq2 = simplify(eq2)
-    sl = nsolve((eq1, eq2), (d1, d2), (0.00, 0.00), set=True, rational=True, manual=True, implicit=True, simplify=True, numerical=True)
-    print(sl)
-    V = np.array([0, sl[0]*price1, sl[1]*price2])
-    return V
-'''
+    shares = np.histogram(data[:,1], bins=np.arange(1.0, n+2.0))[0]/sample
+    V = np.array([0, np.log(shares[1]/(shares[1]+shares[2])), np.log(shares[2]/(shares[1]+shares[2]))])
+    return V  
+
 
 #xxx update for arbitrary dimensions
 def model2(data, n, price1, price2):
