@@ -29,6 +29,11 @@ summary(ml.results1ii)
 ml.results1iii <- mlogit(choiceid~+0 | +0 | p, data = ml.data)
 summary(ml.results1iii)
 
+# Using choice "1" as reference level
+ml.results1iii <- mlogit(choiceid~+0 | +0 + p, data = ml.data, reflevel="1")
+summary(ml.results1iii)
+
+
 
 # Repeat with b = -0.2
 mydata2 <- read.table("data_frame2.txt", sep = "\t", col.names=c( 'id', 'choiceid', 'p1', 'p2'))
@@ -46,6 +51,10 @@ summary(ml.results2ii)
 
 # V_j = d_j * p_j
 ml.results2iii <- mlogit(choiceid~+0 | +0 | p , data = ml.data2)
+summary(ml.results2iii)
+
+# Using choice "1" as reference level
+ml.results2iii <- mlogit(choiceid~+0 | +0 + p, data = ml.data2, reflevel="1")
 summary(ml.results2iii)
 
 

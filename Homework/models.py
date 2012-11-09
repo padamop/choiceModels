@@ -27,7 +27,7 @@ def model1(data, n, price1, price2):
     def f(b):
         y = shares[1]*b*price1 + shares[2]*b*price2 - np.log(1 + np.exp(b*price1) + np.exp(b*price2))
         return y
-    sl = scipy.optimize.fsolve(f, 0.0) # xxx 
+    sl = scipy.optimize.fsolve(f, 0.0) # xxx    
     #print('prices: 0\t' + str(price1) + '\t' + str(price2))
     #print('shares: ' + str(shares[0]) + '\t' + str(shares[1])  + '\t' + str(shares[2]))
     #print('b = ' + str(sl[0]))
