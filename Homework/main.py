@@ -1,9 +1,9 @@
 import math
 import numpy as np
 import random
-import rpy2
-import rpy2.robjects as robjects
-from rpy2.robjects.packages import importr
+#import rpy2
+#import rpy2.robjects as robjects
+#from rpy2.robjects.packages import importr
 
 from models import model1, model2
 from plots import plotHistogram, plotHistogramII
@@ -28,7 +28,7 @@ d = np.random.rand(n,m2) # alternative specific coefficients
 
 results, prob, utilities = simulate(n, z, w, b, d, a, sample)
 
-r = robjects.r
+#r = robjects.r
 #mlogit = importr('mlogit')
 
 '''
@@ -71,7 +71,7 @@ np.savetxt('data_frame3.txt', results, delimiter='\t', fmt=['%i', '%i']+['%.8f']
 
 
 # Run r script to fit models
-rscript = "F:\\Dropbox\\NYU\\2012 Fall\\Choice Models in Operations\\Homework\\Homework2\\problem2_3_b.R"
+#rscript = "F:\\Dropbox\\NYU\\2012 Fall\\Choice Models in Operations\\Homework\\Homework2\\problem2_3_b.R"
 #results = r.source(rscript, **{'echo': True})
 
 '''
@@ -117,7 +117,7 @@ for i in range(trainingSets):
     # ground truth model
     results, prob, utilities = simulate(n, z, w, b, d, a, sample)
     # fit model 1
-    model1Estimate = model1(results, n, pblue, pred) #xxx
+    model1Estimate, beta = model1(results, n, pblue, pred) #xxx
     # fit model 2
     model2Estimate = model2(results, n, pblue, pred) #xxx
     #print(model1Estimate)
@@ -129,6 +129,51 @@ for i in range(trainingSets):
     # compute errors
     errors.itemset((i, 0), math.fabs(trueShare-model1Share)/trueShare)
     errors.itemset((i, 1), math.fabs(trueShare-model2Share)/trueShare)
+
+# plot histogram
+plotHistogram(errors[:,0], errors[:,1], label1=r'Model 1: $V_j = \beta p_j$', label2=r'Model 2: $V_j = \delta_j p_j$', title='Histogram of relative errors', xlabel='Value', ylabel='Frequency')
+plotHistogramII([errors[:,0], errors[:,1]], label=[r'Model 1: $V_j = \beta p_j$', r'Model 2: $V_j = \delta_j p_j$'], title='Histogram of relative errors', xlabel='Value', ylabel='Frequency', bins=20)
+
+
+'''
+For out-of-sample prediction
+'''
+print('out-of-sample prediction')
+n = 3
+m1 = 0  # no variables with generic coefficients
+
+a = np.reshape(np.array(([0, 3.584, 1.99])), (1, n)) # intercepts
+b = np.zeros((1,m1))
+z = np.zeros((n,m1))
+d = np.array(([0], [-0.75], [-0.5])) # alternative specific variable coefficients
+
+trainingSets = 100
+testSetSize = 100
+errors = np.empty([trainingSets*testSetSize, 2]) 
+for i in range(trainingSets):
+    # sample each price independently and uniformly at random from the interval [0, 10]
+    pblue = random.uniform(1, 10)
+    pred = random.uniform(1, 10)
+    w = np.array(([0], [pblue], [pred]))
+    # ground truth model
+    results, prob, utilities = simulate(n, z, w, b, d, a, sample)
+    # fit model 1
+    model1Estimate, beta = model1(results, n, pblue, pred) #xxx
+    # fit model 2
+    model2Estimate = model2(results, n, pblue, pred) #xxx
+    deltaBlue = float(model2Estimate[1])/pblue
+    #print(model1Estimate)
+    #print(model2Estimate)
+    
+    for j in range(testSetSize):
+        pblue = random.uniform(1, 10)
+        # compute sales
+        trueShare = math.exp(a[0,1]-d[1,0]*pblue)/(1 + math.exp(a[0,1]-d[1,0]*pblue))
+        model1Share = math.exp(float(beta*pblue)/(1 + math.exp(float(beta*pblue))))
+        model2Share = math.exp(float(deltaBlue*pblue))/(1 + math.exp(float(deltaBlue*pblue)))
+        # compute errors
+        errors.itemset((i*testSetSize+j, 0), math.fabs(trueShare-model1Share)/trueShare)
+        errors.itemset((i*testSetSize+j, 1), math.fabs(trueShare-model2Share)/trueShare)
 
 # plot histogram
 plotHistogram(errors[:,0], errors[:,1], label1=r'Model 1: $V_j = \beta p_j$', label2=r'Model 2: $V_j = \delta_j p_j$', title='Histogram of relative errors', xlabel='Value', ylabel='Frequency')

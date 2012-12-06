@@ -32,7 +32,7 @@ def model1(data, n, price1, price2):
     #print('shares: ' + str(shares[0]) + '\t' + str(shares[1])  + '\t' + str(shares[2]))
     #print('b = ' + str(sl[0]))
     V = np.array([0, sl*price1, sl*price2])
-    return V 
+    return V, float(sl) 
 
 
 # Same results with model2() but simpler implementation
